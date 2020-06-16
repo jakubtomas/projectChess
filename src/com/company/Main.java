@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -10,7 +12,13 @@ public class Main {
        // chess.checkShooter("E4", "H8");
         //chess.checkHorse("D6", "F5");
 
-       chess.zoznamPolicokPoDvojnasobnomSkokuKonom();
+
+
+       List list = chess.zoznamPolicokPoDvojnasobnomSkokuKonom("D6");
+
+        for (Object o : list) {
+            System.out.println(o);
+        }
        // System.out.println("result is "  + chess.checkTower("B2", "H2"));
 //        System.out.println("a1 "  +  chess.normalize("a1"));
 //        System.out.println("A1 "  +  chess.normalize("A1"));

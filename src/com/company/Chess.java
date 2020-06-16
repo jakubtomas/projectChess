@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Chess {
 
-    public ArrayList<String> listHorsePosition = new ArrayList<>();
+
 
     public String normalize(String position) {
         if (position == null || position.length() != 2)
@@ -34,6 +34,8 @@ public class Chess {
 //        System.out.println("first is " + first);
 //        System.out.println("second is " + second);
 
+
+
         // prve velke  pismeno a cislo
         if (first > 64 && first < 73 && second > 48 && second < 57) {
             //  System.out.println("we are here ");
@@ -47,12 +49,12 @@ public class Chess {
 
             // prve cislo a velke pismeno
         } else if (first > 48 && first < 57 && second > 64 && second < 73) {
-            return position;
+            return Character.toString(second) + Character.toString(first);
 
             // prve cislo a male pismeno
         } else if (first > 48 && first < 57 && second > 96 && second < 104) {
             second = second - 32;
-            return Character.toString(first) + Character.toString(second);
+            return Character.toString(second) + Character.toString(first);
 
         } else {
             return null;
@@ -309,6 +311,7 @@ public class Chess {
         System.out.println("one x is " + one_x);
 
 
+        ArrayList<String> listHorsePosition = new ArrayList<>();
 
 
         // kon pohyb smerom hore  dolava
@@ -420,7 +423,12 @@ public class Chess {
         }
 
 
-        writeList();
+
+
+        for (int i = 0; i < listHorsePosition.size(); i++) {
+            listHorsePosition.get(i).equals(destination);
+            return true;
+        }
 
         return false;
     }
@@ -443,7 +451,7 @@ public class Chess {
         System.out.println("one x is " + one_x);
 
 
-
+        ArrayList<String> listHorsePosition = new ArrayList<>();
 
         // kon pohyb smerom hore  dolava
         one_x = one_x - 1; // horizontalne odpocitavam o 1
@@ -553,60 +561,53 @@ public class Chess {
             }
         }
 
-
-        //writeList();
-
         return listHorsePosition;
     }
 
-    public List zoznamPolicokPoDvojnasobnomSkokuKonom(){
+    public List zoznamPolicokPoDvojnasobnomSkokuKonom(String pos){
 
-        ArrayList<String> listpodvochskokoch = new ArrayList<>();
         ArrayList<String> listFirstStep = new ArrayList<>();
         ArrayList<String> secondList = new ArrayList<>();
-        ArrayList<String> overList = new ArrayList<>();
+        boolean permission = true;
+        List<String> overList = new ArrayList<>();
 
-        listFirstStep = listHorse("D6", "A1");
+        listFirstStep = listHorse(pos, "A1");
 
-        System.out.println("first part");
         for (int i = 0; i < listFirstStep.size(); i++) {
-//           System.out.println(listFirstStep.get(i));
 
-            String value = listFirstStep.get(i);
+            secondList = listHorse(listFirstStep.get(i), "A1");
 
-            System.out.println("value is -----------------------------------------------" + value);
-            secondList = listHorse( value, "A1");
+            for (int j = 0; j <secondList.size() ; j++) {
 
-            for (int j = 0; j < secondList.size(); j++) {
-                System.out.println(secondList.get(j));
+                // when is empty size
+                if (overList.size() == 0) {
+                    overList.add(secondList.get(j));
+
+                } else {
+
+
+                    for (int k = 0; k < overList.size(); k++) {
+
+                        if (secondList.get(j).equals(overList.get(k))) {
+                            permission = false;
+                            break;
+                        }
+                    }
+
+                    if (permission) {
+                        overList.add(secondList.get(j));
+                    }
+
+                    permission = true;
+
+                }
             }
-
-//
-//            for (int j = 0; j <secondList.size() ; j++) {
-//                overList.add(secondList.get(i));
-//            }
-
         }
 
-
-        System.out.println("----------------------- space -----------------");
-
-
-
-        for (int i = 0; i < listpodvochskokoch.size(); i++) {
-            System.out.println(listpodvochskokoch.get(i));
-
-        }
-
-        return null;
+        return overList;
     }
 
-    public void  writeList() {
-        for (int i = 0; i < listHorsePosition.size(); i++) {
-            System.out.println(listHorsePosition.get(i));
-        }
 
-    }
 
 
 
